@@ -22,14 +22,18 @@
 			<form>
 				<div class="form-group">
 					<label for="formSignUpEmail">Email address</label>
-					<input type="email" class="form-control" id="formSignUpEmail" placeholder="Enter your email address">
+					<input type="email" class="form-control" id="formSignUpEmail" placeholder="Enter your email address" required
+					pattern="^[\w]{1,}[\w.+-]{0,}@[a-zA-Z0–9]{1,}[\w-]{1,}([.][a-zA-Z]{2,}|[.][a-zA-Z0–9]{1,}[\w-]{1,}[.][a-zA-Z]{2,})$">
 				</div>
 				<div class="form-group">
 					<label for="formSignUpPassword">Password</label>
-					<input type="password" class="form-control" id="formSignUpPassword" placeholder="Enter your password">
+					<input type="password" class="form-control" id="formSignUpPassword" placeholder="Enter your password" required
+					pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@*$#]).{8,16}" onkeyup="jsSignUpValidatePassword()">
 
-					<input type="password" class="form-control mt-4" id="formSignUpPasswordConf" placeholder="Confirm your password">
+					<input type="password" class="form-control mt-4" id="formSignUpPasswordConf" placeholder="Confirm your password" required
+					pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@*$#]).{8,16}" onkeyup="jsSignUpValidatePassword();">
 				</div>
+				<p id="password_comparison"></p>
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form>
 		</div>
@@ -46,6 +50,22 @@
 
 
     <!-- Optional Javascript -->
+	<script>
+      var jsSignUpPassword = document.getElementById("formSignUpPassword");
+      var jsSignUpPasswordConf = document.getElementById("formSignUpPasswordConf");
+
+      function jsSignUpValidatePassword(){
+        if(jsSignUpPassword.value != jsSignUpPasswordConf.value) {
+          jsSignUpPasswordConf.setCustomValidity("Passwords don't match!");
+		 document.getElementById("password_comparison").innerHTML = "<div class='alert alert-danger' role='alert'>Passwords don't match!</div>";
+        } else {
+          jsSignUpPasswordConf.setCustomValidity('');
+		 document.getElementById("password_comparison").innerHTML = "";
+        }
+      }
+
+    </script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
