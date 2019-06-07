@@ -19,19 +19,21 @@
 
 	<div class="row">
 		<div class="col-6">
-			<form>
+			<form name="formSignUp" method="POST" action="signup.ctrl.php">
 				<div class="form-group">
 					<label for="formSignUpEmail">Email address</label>
 					<input type="email" class="form-control" id="formSignUpEmail" placeholder="Enter your email address" required
-					pattern="^[\w]{1,}[\w.+-]{0,}@[a-zA-Z0–9]{1,}[\w-]{1,}([.][a-zA-Z]{2,}|[.][a-zA-Z0–9]{1,}[\w-]{1,}[.][a-zA-Z]{2,})$">
+					pattern="^[\w]{1,}[\w.+-]{0,}@[a-zA-Z0–9]{1,}[\w-]{1,}([.][a-zA-Z]{2,}|[.][a-zA-Z0–9]{1,}[\w-]{1,}[.][a-zA-Z]{2,})$"
+					name="formSignUpEmail">
 				</div>
 				<div class="form-group">
 					<label for="formSignUpPassword">Password</label>
 					<input type="password" class="form-control" id="formSignUpPassword" placeholder="Enter your password" required
-					pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@*$#]).{8,16}" onkeyup="jsSignUpValidatePassword()">
+					pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@*$#]).{8,16}" onkeyup="jsSignUpValidatePassword()"
+					name="formSignUpPassword">
 
 					<input type="password" class="form-control mt-4" id="formSignUpPasswordConf" placeholder="Confirm your password" required
-					pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@*$#]).{8,16}" onkeyup="jsSignUpValidatePassword();">
+					pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@*$#]).{8,16}" onkeyup="jsSignUpValidatePassword();" name="formSignUpPasswordConf">
 				</div>
 				<p id="password_comparison"></p>
 				<button type="submit" class="btn btn-primary">Submit</button>
