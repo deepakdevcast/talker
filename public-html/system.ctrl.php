@@ -1,5 +1,5 @@
 <?php
-require('db-conn.inc.php')
+require('db-conn.inc.php');
 // Place directly inside Bootstrap container to keep the right structure of Bootstrap document
 function phpShowFeedback($feedback_id) {
 	switch ($feedback_id) {
@@ -10,7 +10,7 @@ function phpShowFeedback($feedback_id) {
 
 		case "811":
 		$feedback_type="success";
-		$feedback_text="Everything is valid, we can store the record to the database";
+		$feedback_text="you have successfully Sign Up";
         break;
         
         case "801":
