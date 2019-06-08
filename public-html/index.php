@@ -1,3 +1,4 @@
+<?php session_start(); require('system.ctrl.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,13 +15,13 @@
 	<div class="row justify-content-md-center">
 		<div class="col-12 col-md-auto"><h1>TALKER | SIGN UP</h1></div>
 	</div>
-<?php if ($_GET["msgid"]!="") { ?>
-	<div class="row">
-		<div class="col-12">
-			<div class="alert alert-success" role="alert">Everything is valid, we can store the record to the database</div>
-		</div>
-	</div>
-<?php } ?>
+<?php 
+	if(isset($_SESSION["msgid"])&&$_SESSION["msgid"]!=""){
+		echo (phpShowFeedback($_SESSION["msgid"]));
+		$_SESSION["msgid"]="";
+	}
+?>
+
 
 	<hr><br>
 
