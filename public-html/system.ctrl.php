@@ -1,6 +1,7 @@
 <?php
 require('db-conn.inc.php');
 // Place directly inside Bootstrap container to keep the right structure of Bootstrap document
+//to change the message of alert box according to input(top of the page)
 function phpShowFeedback($feedback_id) {
 	switch ($feedback_id) {
 		case "803":
