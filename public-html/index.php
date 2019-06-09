@@ -15,8 +15,7 @@
 	<div class="row justify-content-md-center">
 		<div class="col-12 col-md-auto"><h1>TALKER | SIGN UP</h1></div>
 	</div>
-
-//to show the alert mesage where the validation is true or not
+<!-- to show the alert mesage where the validation is true or not -->
 
 <?php 
 	if(isset($_SESSION["msgid"])&&$_SESSION["msgid"]!=""){
@@ -30,7 +29,7 @@
 	<div class="row">
 		<div class="col-6">
 		    
-			//this is the form
+			<!-- this is the form -->
 			<form name="formSignUp" method="POST" action="signup.ctrl.php">
 				<div class="form-group">
 					<label for="formSignUpEmail">Email address</label>
