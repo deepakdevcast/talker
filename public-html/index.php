@@ -15,18 +15,22 @@
 	<div class="row justify-content-md-center">
 		<div class="col-12 col-md-auto"><h1>TALKER | SIGN UP</h1></div>
 	</div>
+
+//to show the alert mesage where the validation is true or not
+
 <?php 
 	if(isset($_SESSION["msgid"])&&$_SESSION["msgid"]!=""){
 		echo (phpShowFeedback($_SESSION["msgid"]));
 		$_SESSION["msgid"]="";
 	}
 ?>
-
-
+	
 	<hr><br>
 
 	<div class="row">
 		<div class="col-6">
+		    
+			//this is the form
 			<form name="formSignUp" method="POST" action="signup.ctrl.php">
 				<div class="form-group">
 					<label for="formSignUpEmail">Email address</label>
@@ -59,11 +63,12 @@
 </div>
 
 
-    <!-- Optional Javascript -->
+    <!-- Javascript -->
 	<script>
       var jsSignUpPassword = document.getElementById("formSignUpPassword");
       var jsSignUpPasswordConf = document.getElementById("formSignUpPasswordConf");
 
+      //it check the wherther the pasword and conform password is true or not
       function jsSignUpValidatePassword(){
         if(jsSignUpPassword.value != jsSignUpPasswordConf.value) {
           jsSignUpPasswordConf.setCustomValidity("Passwords don't match!");
