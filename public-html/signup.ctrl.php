@@ -14,6 +14,8 @@
     $email_validation=preg_match($user_email_pattern,$user_email);
     $password_validation=preg_match($user_password_pattern,$user_password);
 
+    //checking of input in server-sides
+    
     if ($email_validation && $password_validation && $user_password == $_POST["formSignUpPasswordConf"]) {
         $db_data=array($user_email,$user_password);
         phpModifyDB('INSERT INTO users (user_email,user_password) values(?,?)',$db_data);
