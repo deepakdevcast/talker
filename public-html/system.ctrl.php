@@ -1,5 +1,8 @@
 <?php
 require('db-conn.inc.php');
+require('PHPMailler/Exception.php');
+require('PHPMailler/PHPMailer.php');
+require('PHPMailler/SMTP.php');
 // Place directly inside Bootstrap container to keep the right structure of Bootstrap document
 //to change the message of alert box according to input(top of the page)
 function phpShowFeedback($feedback_id) {
