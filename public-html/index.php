@@ -1,5 +1,5 @@
 <?php session_start(); require('system.ctrl.php'); ?>
-<?php phpSendEmail('dk8232847@gmail.com','phpmailer','this is the test message'); ?>
+<?php  ?>
 
 <!DOCTYPE html>
 <html lang="en">
