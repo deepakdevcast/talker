@@ -17,9 +17,25 @@ function phpShowFeedback($feedback_id) {
         $feedback_type="danger";
         $feedback_text="Email is already exist!!";
         break;
-		case "811":
+        
+        case "805":
+        $feedback_type="danger";
+        $feedback_text="This email is not registered";
+        break;
+
+        case "806":
+        $feedback_type="danger";
+        $feedback_text="your account is already activated";
+        break;
+
+        case "807":
+        $feedback_type="danger";
+        $feedback_text="verification link is corrupted? ";
+        break;
+        
+        case "811":
 		$feedback_type="success";
-		$feedback_text="you have successfully Sign Up";
+		$feedback_text="your account is activated, you can sign in!";
         break;
         
         case "812":
