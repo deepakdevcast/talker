@@ -1,44 +1,5 @@
 <?php session_start(); require('system.ctrl.php'); ?>
-<?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-//Create a new PHPMailer instance
-$mail = new PHPMailer;
-//Tell PHPMailer to use SMTP
-$mail->isSMTP();
-//Enable SMTP debugging
-// 0 = off (for production use)
-// 1 = client messages
-// 2 = client and server messages
-$mail->SMTPDebug = 2;
-//Set the hostname of the mail server
-$mail->Host = 'smtp.gmail.com';
-//Set the SMTP port number
-$mail->Port = 587;
-//Set the encryption system to use tls
-$mail->SMTPSecure = 'tls';
-//Whether to use SMTP authentication
-$mail->SMTPAuth = true;
-//Username to use for SMTP authentication - use full email address for gmail
-$mail->Username = "dk8232847@gmail.com";
-//Password to use for SMTP authentication, your Gmail password comes here
-$mail->Password = "Skydive82@";
-//Set who the message is to be sent from
-$mail->setFrom('dk8232847@gmail.com', 'Deepak Kumar');
-//Set who the message is to be sent to
-$mail->addAddress('deepakononline@gmail.com');
-//Set email format to HTML and add content
-$mail->isHTML(true);
-$mail->Subject = 'Here is the subject';
-$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-//send the message, check for errors
-if (!$mail->send()) {
-    echo "Mailer Error: " . $mail->ErrorInfo;
-} else {
-    echo "Message sent!";
-}
-?>
+<?php phpSendEmail('dk8232847@gmail.com','phpmailer','this is the test message'); ?>
 
 <!DOCTYPE html>
 <html lang="en">
