@@ -83,14 +83,33 @@
 	<script>
       var jsSignUpPassword = document.getElementById("formSignUpPassword");
       var jsSignUpPasswordConf = document.getElementById("formSignUpPasswordConf");
-
+      var jsPasswordRegexPattern = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@*$#]).{8,16}/;
       //it check the wherther the pasword and conform password is true or not
       function jsSignUpValidatePassword(){
-        if(jsSignUpPassword.value != jsSignUpPasswordConf.value) {
-          jsSignUpPasswordConf.setCustomValidity("Passwords don't match!");
+		if(!jsPasswordRegexPattern.test(jsSignUpPassword.value)){
+			if(!document.getElementById("formSignUpPasswordInvalidFeedback")){
+				jsSignUpPassword.classList.add("is-invalid");
+				var newElement = document.createElement("div");
+				newElement.setAttribute("id","formSignUpPasswordInvalidFeedback");
+				newElement.classList.add("invalid-feedback");
+				var newElementContent = document.createTextNode("Password must be between 8 and 16 characters long, with at least one uppercase and lowercase character, one number and one special character (@, *, $ or #).");
+				newElement.appendChild(newElementContent);
+				jsSignUpPassword.parentNode.insertBefore(newElement, jsSignUpPassword.nextSibling);
+			}
+			document.getElementById("password_comparison").innerHTML = "<div class='alert alert-danger' role='alert'>Pattern not matched!</div>";
+		} else if(jsSignUpPassword.value != jsSignUpPasswordConf.value) {
+			if (document.getElementById("formSignUpPasswordInvalidFeedback")){
+				document.getElementById("formSignUpPasswordInvalidFeedback").parentElement.removeChild(
+					document.getElementById("formSignUpPasswordInvalidFeedback"));
+			}
+			jsSignUpPassword.classList.remove("is-invalid");
+			jsSignUpPassword.classList.add("is-valid");
+			
 		 document.getElementById("password_comparison").innerHTML = "<div class='alert alert-danger' role='alert'>Passwords don't match!</div>";
-        } else {
-          jsSignUpPasswordConf.setCustomValidity('');
+        } else if(jsSignUpPassword.value == jsSignUpPasswordConf.value){
+			jsSignUpPasswordConf.classList.add("is-valid");
+		} 
+		else {
 		 document.getElementById("password_comparison").innerHTML = "";
         }
       }
