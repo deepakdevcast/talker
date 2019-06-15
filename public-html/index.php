@@ -44,27 +44,28 @@
 					<label for="formSignUpEmail">Email address</label>
 					<input type="email" <?php echo (phpShowEmailInputValue($_SESSION['formSignUpEmail'])); ?>
 					class="form-control <?php if ($_SESSION['msgid']!='801' && $_SESSION['msgid']!='')
-					{echo 'is-valid';} else{ echo (phpShowInputFeedback($_SESSION['msgid'])[0]); }?>" id="formSignUpEmail" placeholder="Enter your email address" required
-					pattern="^[\w]{1,}[\w.+-]{0,}@[a-zA-Z0–9]{1,}[\w-]{1,}([.][a-zA-Z]{2,}|[.][a-zA-Z0–9]{1,}[\w-]{1,}[.][a-zA-Z]{2,})$"
-					name="formSignUpEmail">
+					{echo 'is-valid';} else{ echo (phpShowInputFeedback($_SESSION['msgid'])[0]); }?>" id="formSignUpEmail" placeholder="Enter your email address"
+					name="formSignUpEmail" onkeyup="jsSignUpValidateEmail()">
 					<?php if ($_SESSION['msgid']=='801') { ?>
 					<div class="invalid-feedback"> <?php echo (phpShowInputFeedback($_SESSION['msgid'])[1]); ?></div>
 					<?php } ?>
 				</div>
 				<div class="form-group">
 					<label for="formSignUpPassword">Password</label>
-					<input type="password" class="form-control <?php echo (phpShowInputFeedback($_SESSION["msgid"])[0]); ?>" id="formSignUpPassword" placeholder="Enter your password" required
-					pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@*$#]).{8,16}" onkeyup="jsSignUpValidatePassword()"
+					<input type="password" class="form-control <?php echo (phpShowInputFeedback($_SESSION["msgid"])[0]); ?>" id="formSignUpPassword" placeholder="Enter your password" 
+					onkeyup="jsSignUpValidatePassword()"
 					name="formSignUpPassword">
 					<?php if($_SESSION["msgid"]=="802"){ ?>
 					<div class="invalid-feedback"><?php echo (phpShowInputFeedback($_SESSION["msgid"])[1]); ?></div>
 			        <?php } ?> 
 
-					<input type="password" class="form-control mt-4" id="formSignUpPasswordConf" placeholder="Confirm your password" required
-					pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@*$#]).{8,16}" onkeyup="jsSignUpValidatePassword();" name="formSignUpPasswordConf">
+					<input type="password" class="form-control mt-4 <?php echo (phpShowInputFeedback($_SESSION["msgid"])[0]); ?>" id="formSignUpPasswordConf" placeholder="Confirm your password" 
+					onkeyup="jsSignUpValidatePassword();" name="formSignUpPasswordConf">
+				    <?php if($_SESSION["msgid"]=="803"){ ?>
+					<div class="invalid-feedback"><?php echo (phpShowInputFeedback($_SESSION["msgid"])[1]); ?></div>
+			        <?php } ?> 
 				</div>
-				<p id="password_comparison"></p>
-				<button type="submit" class="btn btn-primary btn-success">Sign Up</button>
+				<button type="submit" id="formSignUpSubmit" class="btn btn-primary btn-success">Sign Up</button>
 			</form>
 		</div>
 
@@ -81,11 +82,50 @@
     <?php $_SESSION["msgid"]=""; $_SESSION['formSingnUpEmail']=""; ?>
     <!-- Javascript -->
 	<script>
-      var jsSignUpPassword = document.getElementById("formSignUpPassword");
+	  var jsSignUpEmail = document.getElementById("formSignUpEmail");
+	  var jsEmailRegexPattern = /^[\w]{1,}[\w.+-]{0,}@[a-zA-Z0–9]{1,}[\w-]{1,}([.][a-zA-Z]{2,}|[.][a-zA-Z0–9]{1,}[\w-]{1,}[.][a-zA-Z]{2,})$/;
+	  var jsSignUpPassword = document.getElementById("formSignUpPassword");
       var jsSignUpPasswordConf = document.getElementById("formSignUpPasswordConf");
       var jsPasswordRegexPattern = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@*$#]).{8,16}/;
-      //it check the wherther the pasword and conform password is true or not
-      function jsSignUpValidatePassword(){
+	  document.getElementById("formSignUpSubmit").disabled = true;
+	  document.getElementById("formSignUpSubmit").classList.remove("btn-success");
+	  document.getElementById("formSignUpSubmit").classList.add("btn-danger");
+	  function jsSignUpSubmitEnable() {
+			if (jsEmailRegexPattern.test(jsSignUpEmail.value) && jsPasswordRegexPattern.test(jsSignUpPassword.value) && jsSignUpPassword.value == jsSignUpPasswordConf.value) {
+				document.getElementById("formSignUpSubmit").disabled = false;
+				document.getElementById("formSignUpSubmit").classList.remove("btn-danger");
+	            document.getElementById("formSignUpSubmit").classList.add("btn-success");
+			}else{
+				document.getElementById("formSignUpSubmit").disabled = true;
+				document.getElementById("formSignUpSubmit").classList.remove("btn-success");
+	            document.getElementById("formSignUpSubmit").classList.add("btn-danger");
+			}
+		} 
+	  //it check the wherther the pasword and conform password is true or not
+	  function jsSignUpValidateEmail() {
+		jsSignUpSubmitEnable();
+		if(!jsEmailRegexPattern.test(jsSignUpEmail.value)) {
+			if (!document.getElementById("formSignUpEmailInvalidFeedback")) {
+				jsSignUpEmail.classList.add("is-invalid");
+				var newElement = document.createElement("div");
+				newElement.setAttribute("id", "formSignUpEmailInvalidFeedback");
+				newElement.classList.add("invalid-feedback");
+				var newElementContent = document.createTextNode("This is not a valid email address");
+				newElement.appendChild(newElementContent);
+				jsSignUpEmail.parentNode.insertBefore(newElement, jsSignUpEmail.nextSibling);
+			}
+		}else{
+			if (document.getElementById("formSignUpEmailInvalidFeedback")) {
+		document.getElementById("formSignUpEmailInvalidFeedback").parentElement.removeChild(document.getElementById("formSignUpEmailInvalidFeedback"));
+		}
+		jsSignUpEmail.classList.remove("is-invalid");
+		jsSignUpEmail.classList.add("is-valid");
+		}
+	  }
+
+	  
+	  function jsSignUpValidatePassword(){
+		jsSignUpSubmitEnable()
 		if(!jsPasswordRegexPattern.test(jsSignUpPassword.value)){
 			if(!document.getElementById("formSignUpPasswordInvalidFeedback")){
 				jsSignUpPassword.classList.add("is-invalid");
@@ -96,21 +136,31 @@
 				newElement.appendChild(newElementContent);
 				jsSignUpPassword.parentNode.insertBefore(newElement, jsSignUpPassword.nextSibling);
 			}
-			document.getElementById("password_comparison").innerHTML = "<div class='alert alert-danger' role='alert'>Pattern not matched!</div>";
 		} else if(jsSignUpPassword.value != jsSignUpPasswordConf.value) {
+			if(!document.getElementById("formSignUpPasswordConfInvalidFeedback")){
+				jsSignUpPasswordConf.classList.add("is-invalid");
+				var newElement = document.createElement("div");
+				newElement.setAttribute("id","formSignUpPasswordConfInvalidFeedback");
+				newElement.classList.add("invalid-feedback");
+				var newElementContent = document.createTextNode("password doesn't match!!");
+				newElement.appendChild(newElementContent);
+				jsSignUpPasswordConf.parentNode.insertBefore(newElement, jsSignUpPasswordConf.nextSibling);
+			}
 			if (document.getElementById("formSignUpPasswordInvalidFeedback")){
 				document.getElementById("formSignUpPasswordInvalidFeedback").parentElement.removeChild(
 					document.getElementById("formSignUpPasswordInvalidFeedback"));
 			}
 			jsSignUpPassword.classList.remove("is-invalid");
 			jsSignUpPassword.classList.add("is-valid");
-			
-		 document.getElementById("password_comparison").innerHTML = "<div class='alert alert-danger' role='alert'>Passwords don't match!</div>";
-        } else if(jsSignUpPassword.value == jsSignUpPasswordConf.value){
-			jsSignUpPasswordConf.classList.add("is-valid");
-		} 
+	    } 
 		else {
-		 document.getElementById("password_comparison").innerHTML = "";
+			if (document.getElementById("formSignUpPasswordConfInvalidFeedback")){
+				document.getElementById("formSignUpPasswordConfInvalidFeedback").parentElement.removeChild(
+					document.getElementById("formSignUpPasswordConfInvalidFeedback"));
+			}
+			jsSignUpPasswordConf.classList.remove("is-invalid");
+			jsSignUpPasswordConf.classList.add("is-valid");
+			
         }
       }
 
